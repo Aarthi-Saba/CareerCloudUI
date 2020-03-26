@@ -1,0 +1,36 @@
+﻿@model CareerCloud.Pocos.CompanyJobEducationPoco
+
+@{
+    ViewData["Title"] = "Company Job Education Details";
+}
+
+<h1>Company Job Education etails</h1>
+
+<div>
+    <h4>CompanyJobEducationPoco</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Major)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Major)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Importance)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Importance)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyJob)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompanyJob.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

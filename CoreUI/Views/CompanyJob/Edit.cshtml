@@ -1,0 +1,49 @@
+﻿@model CareerCloud.Pocos.CompanyJobPoco
+
+@{
+    ViewData["Title"] = "Company Job Edit";
+}
+
+<h1>Company Job Edit</h1>
+
+<h4>@*CompanyJobPoco*@</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Company" class="control-label"></label>
+                <select asp-for="Company" class="form-control" asp-items="ViewBag.Company"></select>
+                <span asp-validation-for="Company" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileCreated" class="control-label"></label>
+                <input asp-for="ProfileCreated" class="form-control" />
+                <span asp-validation-for="ProfileCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsInactive" /> @Html.DisplayNameFor(model => model.IsInactive)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCompanyHidden" /> @Html.DisplayNameFor(model => model.IsCompanyHidden)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

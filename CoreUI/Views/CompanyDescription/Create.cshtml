@@ -1,0 +1,46 @@
+﻿@model CareerCloud.Pocos.CompanyDescriptionPoco
+
+@{
+    ViewData["Title"] = "Company Description Create";
+}
+
+<h1>Company Description Create</h1>
+
+<h4>@*CompanyDescription*@Poco</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Company" class="control-label"></label>
+                <select asp-for="Company" class ="form-control" asp-items="ViewBag.Company"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageId" class="control-label"></label>
+                <select asp-for="LanguageId" class ="form-control" asp-items="ViewBag.LanguageId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyDescription" class="control-label"></label>
+                <input asp-for="CompanyDescription" class="form-control" />
+                <span asp-validation-for="CompanyDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

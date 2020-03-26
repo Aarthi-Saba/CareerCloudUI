@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CareerCloud.Pocos.ApplicantSkillPoco>
+
+@{
+    ViewData["Title"] = "Applicant Skill Index";
+    ViewData["Options"] = true;
+}
+
+<h1>Applicant Skill Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <partial name="~/Views/Shared/ApplicantShared/_Skill.cshtml" model="Model.ToList()" />
+</div>

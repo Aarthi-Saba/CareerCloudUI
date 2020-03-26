@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CareerCloud.Pocos.ApplicantWorkHistoryPoco>
+@{
+    ViewData["Title"] = "ApplicantWork";
+    var flag = (bool)ViewData["Options"];
+}
+
+@if (!flag)
+{
+    <h4>ApplicantWork</h4>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicantProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SystemCountryCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicantProfile.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SystemCountryCode.Code)
+                </td>
+                @if (flag)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                     </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

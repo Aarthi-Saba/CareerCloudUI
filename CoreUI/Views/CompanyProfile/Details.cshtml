@@ -1,0 +1,60 @@
+﻿@model CareerCloud.Pocos.CompanyProfilePoco
+
+@{
+    ViewData["Title"] = "Company Profile Details";
+    ViewData["Options"] = false;
+}
+
+<h1>Company Profile Details</h1>
+
+<div>
+    @*<h4>CompanyProfilePoco</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RegistrationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyWebsite)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompanyWebsite)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContactPhone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyLogo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompanyLogo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<br />
+<div>
+    <partial name="~/Views/Shared/CompanyShared/_Job.cshtml" model="Model.CompanyJob.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/CompanyShared/_Description.cshtml" model="Model.CompanyDescription.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/CompanyShared/_Location.cshtml" model="Model.CompanyLocation.ToList()" />
+</div>

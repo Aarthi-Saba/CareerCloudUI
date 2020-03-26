@@ -1,0 +1,59 @@
+﻿@model CareerCloud.Pocos.ApplicantEducationPoco
+
+@{
+    ViewData["Title"] = "Applicant Education Edit";
+}
+
+<h1>Applicant Education Edit</h1>
+
+<h4>ApplicantEducationPoco</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Applicant" class="control-label"></label>
+                <select asp-for="Applicant" class="form-control" asp-items="ViewBag.Applicant"></select>
+                <span asp-validation-for="Applicant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Major" class="control-label"></label>
+                <input asp-for="Major" class="form-control" />
+                <span asp-validation-for="Major" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CertificateDiploma" class="control-label"></label>
+                <input asp-for="CertificateDiploma" class="form-control" />
+                <span asp-validation-for="CertificateDiploma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompletionDate" class="control-label"></label>
+                <input asp-for="CompletionDate" class="form-control" />
+                <span asp-validation-for="CompletionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompletionPercent" class="control-label"></label>
+                <input asp-for="CompletionPercent" class="form-control" />
+                <span asp-validation-for="CompletionPercent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

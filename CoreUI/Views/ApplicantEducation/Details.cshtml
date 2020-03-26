@@ -1,0 +1,54 @@
+﻿@model CareerCloud.Pocos.ApplicantEducationPoco
+
+@{
+    ViewData["Title"] = "Applicant Education Details";
+}
+
+<h1>Applicant Education Details</h1>
+<div>
+    <h4>ApplicantEducationDetails</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Major)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Major)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CertificateDiploma)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CertificateDiploma)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompletionDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompletionDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompletionPercent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompletionPercent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ApplicantProfile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ApplicantProfile.City)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

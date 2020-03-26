@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CareerCloud.Pocos.ApplicantSkillPoco>
+@{
+    ViewData["Title"] = "ApplicantSkill";
+    var flag = (bool)ViewData["Options"];
+}
+
+@if (!flag)
+{
+    <h4>ApplicantSkill</h4>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Skill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkillLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicantProfile)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Skill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SkillLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicantProfile.City)
+                </td>
+                @if (flag)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

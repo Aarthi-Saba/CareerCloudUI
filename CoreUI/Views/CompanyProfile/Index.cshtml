@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyProfilePoco>
+
+@{
+    ViewData["Title"] = "Company Profile";
+}
+
+<h1>Company Profile</h1>
+<p>
+    <a asp-controller="CompanyDescription" asp-action="Index"> CompanyDescription </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="CompanyJobDescription" asp-action="Index"> CompanyJobDescription </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="CompamyJob" asp-action="Index"> CompanyJob </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="CompanyJobEducation" asp-action="Index"> CompanyJobEducation </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="CompanyJobSkill" asp-action="Index"> CompanyJobSkill </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="CompanyLocation" asp-action="Index"> CompanyLocation </a>
+</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RegistrationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyWebsite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyLogo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyWebsite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyLogo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

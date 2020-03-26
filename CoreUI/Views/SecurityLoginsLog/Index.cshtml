@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CareerCloud.Pocos.SecurityLoginsLogPoco>
+
+@{
+    ViewData["Title"] = "Security Logins Log Index";
+}
+
+<h1>Security Logins Log Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SourceIP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogonDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSuccesful)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecurityLogin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourceIP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogonDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSuccesful)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityLogin.EmailAddress)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

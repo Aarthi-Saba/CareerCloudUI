@@ -1,0 +1,64 @@
+﻿@model CareerCloud.Pocos.ApplicantSkillPoco
+
+@{
+    ViewData["Title"] = "Applicant Skill Edit";
+}
+
+<h1>Applicant Skill Edit</h1>
+
+@*<h4>ApplicantSkillPoco</h4>*@
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Applicant" class="control-label"></label>
+                <select asp-for="Applicant" class="form-control" asp-items="ViewBag.Applicant"></select>
+                <span asp-validation-for="Applicant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Skill" class="control-label"></label>
+                <input asp-for="Skill" class="form-control" />
+                <span asp-validation-for="Skill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SkillLevel" class="control-label"></label>
+                <input asp-for="SkillLevel" class="form-control" />
+                <span asp-validation-for="SkillLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartMonth" class="control-label"></label>
+                <input asp-for="StartMonth" class="form-control" />
+                <span asp-validation-for="StartMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartYear" class="control-label"></label>
+                <input asp-for="StartYear" class="form-control" />
+                <span asp-validation-for="StartYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndMonth" class="control-label"></label>
+                <input asp-for="EndMonth" class="form-control" />
+                <span asp-validation-for="EndMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndYear" class="control-label"></label>
+                <input asp-for="EndYear" class="form-control" />
+                <span asp-validation-for="EndYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

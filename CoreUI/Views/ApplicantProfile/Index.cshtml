@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CareerCloud.Pocos.ApplicantProfilePoco>
+
+@{
+    ViewData["Title"] = "Applicant Profile";
+}
+
+<h1>Applicant Profile </h1>
+
+<p>
+    <a asp-controller="ApplicantEducation" asp-action="Index"> ApplicantEducation </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="ApplicantJobApplication" asp-action="Index"> ApplicantJobApplication </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="ApplicantResume" asp-action="Index"> ApplicantResume </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="ApplicantSkill" asp-action="Index"> ApplicantSkill </a> &nbsp; &nbsp; | &nbsp; &nbsp;
+    <a asp-controller="ApplicantWorkHistory" asp-action="Index"> ApplicantWorkHistory </a>
+</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Currency)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Street)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Province)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecurityLogin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SystemCountry)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentSalary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Street)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City) |
+                    @Html.DisplayFor(modelItem => item.Province) <br />
+                    @Html.DisplayFor(modelItem => item.PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecurityLogin.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SystemCountry.Code)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

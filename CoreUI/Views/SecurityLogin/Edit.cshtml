@@ -1,0 +1,89 @@
+﻿@model CareerCloud.Pocos.SecurityLoginPoco
+
+@{
+    ViewData["Title"] = "Security Login Edit";
+}
+
+<h1>Security Login Edit</h1>
+
+@*<h4>SecurityLoginPoco</h4>*@
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordUpdate" class="control-label"></label>
+                <input asp-for="PasswordUpdate" class="form-control" />
+                <span asp-validation-for="PasswordUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AgreementAccepted" class="control-label"></label>
+                <input asp-for="AgreementAccepted" class="form-control" />
+                <span asp-validation-for="AgreementAccepted" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsLocked" /> @Html.DisplayNameFor(model => model.IsLocked)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsInactive" /> @Html.DisplayNameFor(model => model.IsInactive)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ForceChangePassword" /> @Html.DisplayNameFor(model => model.ForceChangePassword)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrefferredLanguage" class="control-label"></label>
+                <input asp-for="PrefferredLanguage" class="form-control" />
+                <span asp-validation-for="PrefferredLanguage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

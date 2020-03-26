@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyLocationPoco>
+
+@{
+    ViewData["Title"] = "Company Location";
+    ViewData["Options"] = true;
+}
+
+<h1>Company Location</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <partial name="~/Views/Shared/CompanyShared/_Location.cshtml" model="Model.ToList()" />
+</div>

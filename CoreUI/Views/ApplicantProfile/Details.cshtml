@@ -1,0 +1,90 @@
+﻿@model CareerCloud.Pocos.ApplicantProfilePoco
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Options"] = false;
+}
+
+<h1>Applicant Profile Details</h1>
+
+<div>
+    @*<h4>ApplicantProfilePoco</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CurrentSalary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CurrentSalary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CurrentRate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CurrentRate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Currency)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Currency)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Province)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Province)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Street)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Street)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostalCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SecurityLogin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SecurityLogin.EmailAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SystemCountry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SystemCountry.Code)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<br />
+<br />
+<div>
+    <partial name="~/Views/Shared/ApplicantShared/_Education.cshtml" model="Model.ApplicantEducation.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/ApplicantShared/_JobApplication.cshtml" model="Model.ApplicantJob.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/ApplicantShared/_Resume.cshtml" model="Model.ApplicantResume.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/ApplicantShared/_Skill.cshtml" model="Model.ApplicantSkill.ToList()" />
+    <br />
+    <br />
+    <partial name="~/Views/Shared/ApplicantShared/_Work.cshtml" model="Model.ApplicantWork.ToList()" />
+</div>

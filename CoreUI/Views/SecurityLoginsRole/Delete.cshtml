@@ -1,0 +1,33 @@
+﻿@model CareerCloud.Pocos.SecurityLoginsRolePoco
+
+@{
+    ViewData["Title"] = "Security Logins Role Delete";
+}
+
+<h1>Security Logins Role Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>@*SecurityLoginsRolePoco*@</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SecurityLogin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SecurityLogin.EmailAddress)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SecurityRole)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SecurityRole.Role)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

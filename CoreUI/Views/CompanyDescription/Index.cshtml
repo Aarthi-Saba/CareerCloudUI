@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyDescriptionPoco>
+
+@{
+    ViewData["Title"] = "Company Description Index";
+    ViewData["Options"] = true;
+}
+
+<h1>Company Description Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <partial name="~/Views/Shared/CompanyShared/_Description.cshtml" model="Model.ToList()" />
+</div>
