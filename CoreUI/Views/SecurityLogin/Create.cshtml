@@ -1,8 +1,8 @@
-﻿@model CareerCloud.Pocos.SecurityLoginPoco
+﻿@model CoreUI.Models.SecurityLogin
 
 @{
     ViewData["Title"] = "Security Login Create";
-    var secflag = (bool)ViewData["SecurityFlag"];
+    var secflag = false;
 }
 @if (secflag)
 {
@@ -15,66 +15,67 @@
     @*<div class="col-md-4">*@
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="Login" class="control-label"></label> &nbsp;
-            <input asp-for="Login" class="form-control"  />
+            <input asp-for="Login" class="form-control" />
             <span asp-validation-for="Login" class="text-danger"></span>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="Password" class="control-label"></label> &nbsp;
             <input asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <label asp-for="Created" class="control-label"></label> &nbsp;
+            <input asp-for="Created" class="form-control" />
+            <span asp-validation-for="Created" class="text-danger"></span>
+        </div>
         @if (secflag)
         {
-            <div class="form-group form-inline">
-                <label asp-for="Created" class="control-label"></label> &nbsp;
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group form-inline">
+            <div class="form-group">
                 <label asp-for="PasswordUpdate" class="control-label"></label> &nbsp;
                 <input asp-for="PasswordUpdate" class="form-control" />
                 <span asp-validation-for="PasswordUpdate" class="text-danger"></span>
             </div>
-            <div class="form-group form-inline">
+            <div class="form-group">
                 <label asp-for="AgreementAccepted" class="control-label"></label> &nbsp;
                 <input asp-for="AgreementAccepted" class="form-control" />
                 <span asp-validation-for="AgreementAccepted" class="text-danger"></span>
             </div>
         }
 
-        <div class="form-group form-check form-inline">
+        <div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="IsLocked" /> @Html.DisplayNameFor(model => model.IsLocked)
             </label>
         </div>
-        <div class="form-group form-check form-inline">
+        <div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="IsInactive" /> @Html.DisplayNameFor(model => model.IsInactive)
             </label>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="EmailAddress" class="control-label"></label> &nbsp;
             <input asp-for="EmailAddress" class="form-control" />
             <span asp-validation-for="EmailAddress" class="text-danger"></span>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="PhoneNumber" class="control-label"></label> &nbsp;
             <input asp-for="PhoneNumber" class="form-control" />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="FullName" class="control-label"></label> &nbsp;
             <input asp-for="FullName" class="form-control" />
             <span asp-validation-for="FullName" class="text-danger"></span>
         </div>
-        <div class="form-group form-check form-inline">
-            <label class="form-check-label"> &nbsp;
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                &nbsp;
                 <input class="form-check-input" asp-for="ForceChangePassword" /> @Html.DisplayNameFor(model => model.ForceChangePassword)
             </label>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group">
             <label asp-for="PrefferredLanguage" class="control-label"></label> &nbsp;
             <input asp-for="PrefferredLanguage" class="form-control" />
             <span asp-validation-for="PrefferredLanguage" class="text-danger"></span>
@@ -85,6 +86,7 @@
     </form>
     @*</div>*@
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

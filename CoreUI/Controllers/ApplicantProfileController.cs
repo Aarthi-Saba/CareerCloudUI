@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using AutoMapper;
+using CoreUI.Models;
 
 namespace CoreUI.Controllers
 {
@@ -50,14 +52,49 @@ namespace CoreUI.Controllers
 
             return View(applicantProfilePoco);
         }
+        [HttpPost]
+        public ActionResult JobSearch(Guid? id,string searchString)
+        {
+            var companyJobPoco = _context.CompanyJobDescriptions
+                                    .Where(j => j.JobName.Contains(searchString));
+            var poco =  companyJobPoco.Include(a => a.CompanyJob)
+                .ThenInclude(a => a.CompanyProfile)
+                    .ThenInclude(a => a.CompanyDescription).ToList();
+            
+            if (poco == null)
+            {
+                return NotFound();
+            }
+            TempData.Keep("Applicant");
+            return View(poco);
+        }
+        
+        public async Task<IActionResult> JobSave(Guid id)
+        {
+            var applicantJobPoco = new ApplicantJobApplicationPoco();
+            applicantJobPoco.Id = Guid.NewGuid();
+            applicantJobPoco.Job = id;
+            applicantJobPoco.Applicant = Guid.Parse(TempData["Applicant"].ToString());
+            applicantJobPoco.ApplicationDate = DateTime.Today;
+            _context.Add(applicantJobPoco);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details",new { id = applicantJobPoco.Applicant });
+        }
 
         // GET: ApplicantProfile/Create
         public IActionResult Create()
         {
-            ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress");
+            TempData["securityFlag"]=false;
+            return RedirectToAction("Create", "SecurityLogin");
+        }
+        //[Route("/id")]
+        public IActionResult CreateProfile(Guid id)
+        {
+           // ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress");
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code");
-            ViewData["SecurityFlag"] = false;
-            return View("~/Views/SecurityLogin/Create.cshtml");
+            TempData.Keep("Login");
+            return View("~/Views/ApplicantProfile/Create.cshtml");
+
         }
 
         // POST: ApplicantProfile/Create
@@ -65,18 +102,23 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Login,CurrentSalary,CurrentRate,Currency,Country,Province,Street,City,PostalCode")] ApplicantProfilePoco applicantProfilePoco)
+        public async Task<IActionResult> Create(ApplicantProfile applicantProfile)
         {
             if (ModelState.IsValid)
             {
-                applicantProfilePoco.Id = Guid.NewGuid();
-                _context.Add(applicantProfilePoco);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicantProfile, ApplicantProfilePoco>());
+                var mapper = config.CreateMapper();
+                ApplicantProfilePoco poco = mapper.Map<ApplicantProfilePoco>(applicantProfile);
+                poco.Id = Guid.NewGuid();
+                var login = TempData["Login"];
+                poco.Login = Guid.Parse(login.ToString());
+                _context.Add(poco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details),new {id = poco.Id});
             }
-            ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress", applicantProfilePoco.Login);
-            ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code", applicantProfilePoco.Country);
-            return View(applicantProfilePoco);
+            ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress", applicantProfile.Login);
+            ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code", applicantProfile.Country);
+            return View(applicantProfile);
         }
 
         // GET: ApplicantProfile/Edit/5
@@ -127,7 +169,7 @@ namespace CoreUI.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details));
             }
             ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress", applicantProfilePoco.Login);
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code", applicantProfilePoco.Country);
@@ -141,7 +183,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             var applicantProfilePoco = await _context.ApplicantProfiles
                 .Include(a => a.SecurityLogin)
                 .Include(a => a.SystemCountry)
@@ -150,7 +191,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             return View(applicantProfilePoco);
         }
 

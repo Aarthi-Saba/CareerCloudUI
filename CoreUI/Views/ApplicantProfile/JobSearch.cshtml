@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyJobDescriptionPoco>
+
+@{ 
+    TempData.Keep("Applicant");
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>JobSearch</title>
+</head>
+<body>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.Label("Company Name")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDescriptions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJob.IsInactive)
+            </th>
+            <th>
+                @Html.Label("Internal Position")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @{
+                var company = item.CompanyJob.CompanyProfile.CompanyDescription.FirstOrDefault();
+                if (company != null)
+                {
+                    var companyName = company.CompanyName;
+                }
+            }
+            <td>
+                @company.CompanyName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobDescriptions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyJob.IsInactive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyJob.IsCompanyHidden)
+            </td>
+            <td>
+                <a asp-action="JobSave" asp-controller="ApplicantProfile" asp-route-id="@item.Job">Apply</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

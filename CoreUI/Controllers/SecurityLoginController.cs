@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using CoreUI.Models;
+using AutoMapper;
 
 namespace CoreUI.Controllers
 {
@@ -46,7 +48,14 @@ namespace CoreUI.Controllers
         // GET: SecurityLogin/Create
         public IActionResult Create()
         {
-            ViewData["SecurityFlag"] = true;
+            if (!TempData.ContainsKey("securityFlag"))
+            {
+                ViewData["secFlag"] = true;
+            }
+            else
+            {
+                ViewData["secFlag"] = false;
+            }
             return View();
         }
 
@@ -55,18 +64,20 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Login,Password,Created,PasswordUpdate,AgreementAccepted,IsLocked,IsInactive,EmailAddress,PhoneNumber,FullName,ForceChangePassword,PrefferredLanguage")] SecurityLoginPoco securityLoginPoco)
-        public async Task<IActionResult> Create([Bind("Login,Password,Created,IsLocked,IsInactive,EmailAddress,PhoneNumber,FullName,ForceChangePassword,PrefferredLanguage")] SecurityLoginPoco securityLoginPoco)
+        public async Task<IActionResult> Create(SecurityLogin securityLogin)
         {
             if (ModelState.IsValid)
             {
-                securityLoginPoco.Id = Guid.NewGuid();
-                ViewData["CurrentProfileId"] = securityLoginPoco.Id;
-                _context.Add(securityLoginPoco);
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SecurityLogin, SecurityLoginPoco>());
+                var mapper = config.CreateMapper();
+                SecurityLoginPoco poco = mapper.Map<SecurityLoginPoco>(securityLogin);
+                poco.Id = Guid.NewGuid();
+                _context.Add(poco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("~/Views/ApplicantProfile/Create.cshtml");
+                TempData["Login"] = poco.Id;
+                return RedirectToAction("CreateProfile","ApplicantProfile",new { id = poco.Id });
             }
-            return View(securityLoginPoco);
+            return View(securityLogin);
         }
 
         // GET: SecurityLogin/Edit/5

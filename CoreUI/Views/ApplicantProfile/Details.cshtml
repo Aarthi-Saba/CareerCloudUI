@@ -3,10 +3,18 @@
 @{
     ViewData["Title"] = "Details";
     ViewData["Options"] = false;
+    TempData["Applicant"] = Model.Id;
+
 }
 
-<h1>Applicant Profile Details</h1>
+<h1> @Model.SecurityLogin.FullName Profile Details</h1>
 
+<form asp-controller="ApplicantProfile" asp-action="JobSearch">
+    <p>
+        Job Title : <input type="text" name="SearchString">
+        <input type="submit" value="Search" />
+    </p>
+</form>
 <div>
     @*<h4>ApplicantProfilePoco</h4>*@
     <hr />
@@ -74,17 +82,32 @@
 <br />
 <br />
 <div>
-    <partial name="~/Views/Shared/ApplicantShared/_Education.cshtml" model="Model.ApplicantEducation.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/ApplicantShared/_JobApplication.cshtml" model="Model.ApplicantJob.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/ApplicantShared/_Resume.cshtml" model="Model.ApplicantResume.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/ApplicantShared/_Skill.cshtml" model="Model.ApplicantSkill.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/ApplicantShared/_Work.cshtml" model="Model.ApplicantWork.ToList()" />
+    @if (Model.ApplicantEducation != null)
+    {
+        <partial name="~/Views/Shared/ApplicantShared/_Education.cshtml" model="Model.ApplicantEducation.ToList()" />
+        <br />
+        <br />
+    }
+    @if (Model.ApplicantJob != null)
+    {
+        <partial name="~/Views/Shared/ApplicantShared/_JobApplication.cshtml" model="Model.ApplicantJob.ToList()" />
+        <br />
+        <br />
+    }
+    @if (Model.ApplicantResume != null)
+    {
+        <partial name="~/Views/Shared/ApplicantShared/_Resume.cshtml" model="Model.ApplicantResume.ToList()" />
+        <br />
+        <br />
+    }
+    @if (Model.ApplicantSkill != null)
+    {
+        <partial name="~/Views/Shared/ApplicantShared/_Skill.cshtml" model="Model.ApplicantSkill.ToList()" />
+        <br />
+        <br />
+    }
+    @if (Model.ApplicantWork != null)
+    {
+        <partial name="~/Views/Shared/ApplicantShared/_Work.cshtml" model="Model.ApplicantWork.ToList()" />
+    }
 </div>
