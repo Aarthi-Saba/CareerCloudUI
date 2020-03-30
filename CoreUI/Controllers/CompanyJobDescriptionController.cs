@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using CoreUI.Models;
+using AutoMapper;
 
 namespace CoreUI.Controllers
 {
-    public class CompanyJobDescriptionController : Controller
+    public class CompanyJobDescription : Controller
     {
         private readonly CareerCloudContext _context;
 
-        public CompanyJobDescriptionController(CareerCloudContext context)
+        public CompanyJobDescription(CareerCloudContext context)
         {
             _context = context;
         }
@@ -33,7 +35,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             var companyJobDescriptionPoco = await _context.CompanyJobDescriptions
                 .Include(c => c.CompanyJob)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -41,14 +42,16 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             return View(companyJobDescriptionPoco);
         }
 
         // GET: CompanyJobDescription/Create
-        public IActionResult Create()
+        //[Route("id")]
+        [HttpGet]
+        public IActionResult Create(Guid? id)
         {
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            TempData["Company"] = id;
             return View();
         }
 
@@ -57,17 +60,29 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Job,JobName,JobDescriptions")] CompanyJobDescriptionPoco companyJobDescriptionPoco)
+        public async Task<IActionResult> Create(CompanyJobDetail companyJobDetails)
         {
             if (ModelState.IsValid)
             {
+
+                var config1 = new MapperConfiguration(cfg => cfg.CreateMap<CompanyJob, CompanyJobPoco>());
+                var config2 = new MapperConfiguration(cfg => cfg.CreateMap<CompanyJobDescriptionModel, CompanyJobDescriptionPoco>());
+                var mapper1 = config1.CreateMapper();
+                CompanyJobPoco companyJobPoco = mapper1.Map<CompanyJob,CompanyJobPoco>(companyJobDetails.companyJob);
+                companyJobPoco.Id = Guid.NewGuid();
+                companyJobPoco.Company = Guid.Parse(TempData["Company"].ToString());
+                var mapper2 = config2.CreateMapper();
+                CompanyJobDescriptionPoco companyJobDescriptionPoco =
+                            mapper2.Map<CompanyJobDescriptionModel,CompanyJobDescriptionPoco>(companyJobDetails.companyJobDescription);
                 companyJobDescriptionPoco.Id = Guid.NewGuid();
+                companyJobDescriptionPoco.Job = companyJobPoco.Id;
+                _context.Add(companyJobPoco);
                 _context.Add(companyJobDescriptionPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","CompanyJobEducation",new { id = companyJobPoco.Id });
             }
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobDescriptionPoco.Job);
-            return View(companyJobDescriptionPoco);
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobDescriptionPoco.Job);
+            return View(nameof(Details));
         }
 
         // GET: CompanyJobDescription/Edit/5

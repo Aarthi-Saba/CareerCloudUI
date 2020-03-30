@@ -35,7 +35,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             var applicantProfilePoco = await _context.ApplicantProfiles
                 .Include(a => a.ApplicantEducation)
                 .Include(a => a.ApplicantJob)
@@ -49,7 +48,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             return View(applicantProfilePoco);
         }
         [HttpPost]
@@ -90,7 +88,7 @@ namespace CoreUI.Controllers
         //[Route("/id")]
         public IActionResult CreateProfile(Guid id)
         {
-           // ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "EmailAddress");
+            ViewData["Currency"] = new SelectList(_context.ApplicantProfiles, "Currency", "Currency");
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code");
             TempData.Keep("Login");
             return View("~/Views/ApplicantProfile/Create.cshtml");

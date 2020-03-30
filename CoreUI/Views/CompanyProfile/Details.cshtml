@@ -5,56 +5,70 @@
     ViewData["Options"] = false;
 }
 
-<h1>Company Profile Details</h1>
+<h3>Company Profile Details</h3>
 
 <div>
     @*<h4>CompanyProfilePoco</h4>*@
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.RegistrationDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RegistrationDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompanyWebsite)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CompanyWebsite)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ContactPhone)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ContactPhone)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ContactName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ContactName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompanyLogo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CompanyLogo)
         </dd>
     </dl>
 </div>
+<form asp-controller="CompanyJobDescription" asp-action="Create" asp-route-id="@Model.Id" method="get">
+    <p>
+        <input type="submit" value="Create Job" />
+    </p>
+</form>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 
 <br />
+
 <div>
-    <partial name="~/Views/Shared/CompanyShared/_Job.cshtml" model="Model.CompanyJob.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/CompanyShared/_Description.cshtml" model="Model.CompanyDescription.ToList()" />
-    <br />
-    <br />
-    <partial name="~/Views/Shared/CompanyShared/_Location.cshtml" model="Model.CompanyLocation.ToList()" />
+    @if (Model.CompanyJob.Count > 0)
+    {
+        <partial name="~/Views/Shared/CompanyShared/_Job.cshtml" model="Model.CompanyJob.ToList()" />
+        <br />
+    }
+    @if (Model.CompanyDescription.Count > 0)
+    {
+        <partial name="~/Views/Shared/CompanyShared/_Description.cshtml" model="Model.CompanyDescription.ToList()" />
+        <br />
+    }
+    @if (Model.CompanyLocation.Count > 0)
+    {
+        <partial name="~/Views/Shared/CompanyShared/_Location.cshtml" model="Model.CompanyLocation.ToList()" />
+    }
+
 </div>

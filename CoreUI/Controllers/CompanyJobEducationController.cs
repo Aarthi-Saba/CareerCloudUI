@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using CoreUI.Models;
+using AutoMapper;
 
 namespace CoreUI.Controllers
 {
@@ -46,9 +48,11 @@ namespace CoreUI.Controllers
         }
 
         // GET: CompanyJobEducation/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(Guid? id)
         {
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            TempData["JobId"] = id;
             return View();
         }
 
@@ -57,17 +61,21 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Job,Major,Importance")] CompanyJobEducationPoco companyJobEducationPoco)
+        public async Task<IActionResult> Create(CompanyJobEducation companyJobEducation)
         {
             if (ModelState.IsValid)
             {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<CompanyJobEducation, CompanyJobEducationPoco>());
+                var mapper = config.CreateMapper();
+                CompanyJobEducationPoco companyJobEducationPoco = mapper.Map<CompanyJobEducationPoco>(companyJobEducation);
                 companyJobEducationPoco.Id = Guid.NewGuid();
+                companyJobEducationPoco.Job = Guid.Parse(TempData["JobId"].ToString());
                 _context.Add(companyJobEducationPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","CompanyJobSkill",new { id = companyJobEducationPoco.Job });
             }
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobEducationPoco.Job);
-            return View(companyJobEducationPoco);
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobEducationPoco.Job);
+            return View(companyJobEducation);
         }
 
         // GET: CompanyJobEducation/Edit/5

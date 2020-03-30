@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using CoreUI.Models;
+using AutoMapper;
 
 namespace CoreUI.Controllers
 {
@@ -46,9 +48,11 @@ namespace CoreUI.Controllers
         }
 
         // GET: CompanyJobSkill/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(Guid? id)
         {
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id");
+            TempData["Job"] = id;
             return View();
         }
 
@@ -57,17 +61,21 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Job,Skill,SkillLevel,Importance")] CompanyJobSkillPoco companyJobSkillPoco)
+        public async Task<IActionResult> Create(CompanyJobSkill companyJobSkill)
         {
             if (ModelState.IsValid)
             {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<CompanyJobSkill, CompanyJobSkillPoco>());
+                var mapper = config.CreateMapper();
+                CompanyJobSkillPoco companyJobSkillPoco = mapper.Map<CompanyJobSkillPoco>(companyJobSkill);
                 companyJobSkillPoco.Id = Guid.NewGuid();
+                companyJobSkillPoco.Job = Guid.Parse(TempData["JobId"].ToString());
                 _context.Add(companyJobSkillPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","CompanyJob");
             }
-            ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobSkillPoco.Job);
-            return View(companyJobSkillPoco);
+            //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobSkillPoco.Job);
+            return View(companyJobSkill);
         }
 
         // GET: CompanyJobSkill/Edit/5

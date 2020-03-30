@@ -7,7 +7,7 @@
 
 }
 
-<h1> @Model.SecurityLogin.FullName Profile Details</h1>
+<h3> @Model.SecurityLogin.FullName Profile Details</h3>
 
 <form asp-controller="ApplicantProfile" asp-action="JobSearch">
     <p>
@@ -82,31 +82,31 @@
 <br />
 <br />
 <div>
-    @if (Model.ApplicantEducation != null)
+    @if (Model.ApplicantEducation.Count > 0)
     {
         <partial name="~/Views/Shared/ApplicantShared/_Education.cshtml" model="Model.ApplicantEducation.ToList()" />
         <br />
         <br />
     }
-    @if (Model.ApplicantJob != null)
+    @if (Model.ApplicantJob.Count > 0 )
     {
         <partial name="~/Views/Shared/ApplicantShared/_JobApplication.cshtml" model="Model.ApplicantJob.ToList()" />
         <br />
         <br />
     }
-    @if (Model.ApplicantResume != null)
+    @if (Model.ApplicantResume.Count == 0 )
     {
         <partial name="~/Views/Shared/ApplicantShared/_Resume.cshtml" model="Model.ApplicantResume.ToList()" />
         <br />
         <br />
     }
-    @if (Model.ApplicantSkill != null)
+    @if (Model.ApplicantSkill.Count > 0)
     {
         <partial name="~/Views/Shared/ApplicantShared/_Skill.cshtml" model="Model.ApplicantSkill.ToList()" />
         <br />
         <br />
     }
-    @if (Model.ApplicantWork != null)
+    @if (Model.ApplicantWork.Count > 0)
     {
         <partial name="~/Views/Shared/ApplicantShared/_Work.cshtml" model="Model.ApplicantWork.ToList()" />
     }

@@ -36,6 +36,9 @@ namespace CoreUI.Controllers
 
             var companyJobPoco = await _context.CompanyJobs
                 .Include(c => c.CompanyProfile)
+                .Include(i => i.CompanyJobDescription)
+                .Include(i => i.CompanyJobEducation)
+                .Include(i => i.CompanyJobSkill)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (companyJobPoco == null)
             {

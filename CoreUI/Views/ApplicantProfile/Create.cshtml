@@ -5,7 +5,7 @@
     TempData.Keep("Login");
 }
 
-<h1>Applicant Profile Create</h1>
+<h3>Applicant Profile Create</h3>
 
 @*<h4>ApplicantProfilePoco</h4>*@
 <hr />
@@ -38,15 +38,14 @@
                         <label asp-for="Currency" class="control-label"></label>
                     </td>
                     <td>
-                        <input asp-for="Currency" class="form-control" />
-                        <span asp-validation-for="Currency" class="text-danger"></span>
+                        <select asp-for="Currency" class="form-control" asp-items="ViewBag.Currency"></select>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label asp-for="Country" class="control-label"></label>
                     </td>
-                    <td>"
+                    <td>
                         <select asp-for="Country" class="form-control" asp-items="ViewBag.Country"></select>
                     </td>
                 </tr>

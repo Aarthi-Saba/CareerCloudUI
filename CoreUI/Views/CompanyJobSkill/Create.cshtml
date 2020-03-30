@@ -1,4 +1,4 @@
-﻿@model CareerCloud.Pocos.CompanyJobSkillPoco
+﻿@model CoreUI.Models.CompanyJobSkill
 
 @{
     ViewData["Title"] = "Company Job Skill Create";
@@ -12,24 +12,36 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Job" class="control-label"></label>
-                <select asp-for="Job" class ="form-control" asp-items="ViewBag.Job"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Skill" class="control-label"></label>
-                <input asp-for="Skill" class="form-control" />
-                <span asp-validation-for="Skill" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SkillLevel" class="control-label"></label>
-                <input asp-for="SkillLevel" class="form-control" />
-                <span asp-validation-for="SkillLevel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Importance" class="control-label"></label>
-                <input asp-for="Importance" class="form-control" />
-                <span asp-validation-for="Importance" class="text-danger"></span>
+            <div class="form-group form-online">
+                <table>
+                    <tr>
+                        <td>
+                            <label asp-for="Skill" class="control-label"></label>
+                        </td>
+                        <td>
+                            <input asp-for="Skill" class="form-control" />
+                            <span asp-validation-for="Skill" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="SkillLevel" class="control-label"></label>
+                        </td>
+                        <td>
+                            <input asp-for="SkillLevel" class="form-control" />
+                            <span asp-validation-for="SkillLevel" class="text-danger"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Importance" class="control-label"></label>
+                        </td>
+                        <td>
+                            <input asp-for="Importance" class="form-control" />
+                            <span asp-validation-for="Importance" class="text-danger"></span>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

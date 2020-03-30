@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using CoreUI.Models;
+using AutoMapper;
 
 namespace CoreUI.Controllers
 {
@@ -32,7 +34,6 @@ namespace CoreUI.Controllers
             {
                 return NotFound();
             }
-
             var companyProfilePoco = await _context.CompanyProfiles
                 .Include(c => c.CompanyLocation)
                 .Include(c => c.CompanyJob)
@@ -49,6 +50,7 @@ namespace CoreUI.Controllers
         // GET: CompanyProfile/Create
         public IActionResult Create()
         {
+            ViewData["Language"]=  new SelectList(_context.SystemLanguageCodes, "Name", "Name");
             return View();
         }
 
@@ -57,16 +59,29 @@ namespace CoreUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegistrationDate,CompanyWebsite,ContactPhone,ContactName,CompanyLogo")] CompanyProfilePoco companyProfilePoco)
+        public async Task<IActionResult> Create(CompanyDetails companyDetails)
         {
             if (ModelState.IsValid)
             {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<CompanyProfile, CompanyProfilePoco>();
+                                                cfg.CreateMap<CompanyDescriptionModel, CompanyDescriptionPoco>();});
+                var mapper = config.CreateMapper();
+                CompanyProfilePoco companyProfilePoco = mapper.Map<CompanyProfilePoco>(companyDetails.companyProfile);
                 companyProfilePoco.Id = Guid.NewGuid();
+
+                CompanyDescriptionPoco companyDescriptionPoco =
+                    mapper.Map<CompanyDescriptionPoco>(companyDetails.companyDescription);
+
+                companyDescriptionPoco.Id = Guid.NewGuid();
+                companyDescriptionPoco.Company = companyProfilePoco.Id;
+                var lang = _context.SystemLanguageCodes.Where(l => l.Name == companyDetails.companyDescription.LanguageId).FirstOrDefault();
+                companyDescriptionPoco.LanguageId = lang.LanguageID;
                 _context.Add(companyProfilePoco);
+                _context.Add(companyDescriptionPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details),new { id = companyProfilePoco.Id });
             }
-            return View(companyProfilePoco);
+            return View(companyDetails);
         }
 
         // GET: CompanyProfile/Edit/5

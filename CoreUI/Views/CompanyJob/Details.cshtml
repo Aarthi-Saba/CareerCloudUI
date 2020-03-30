@@ -1,11 +1,12 @@
 ﻿@model CareerCloud.Pocos.CompanyJobPoco
+@using CareerCloud.Pocos
 
 @{
     ViewData["Title"] = "Company Job Details";
     ViewData["Options"] = true;
 }
 
-<h1>Company Job Details</h1>
+<h3>Company Job Details</h3>
 
 <div>
     @*<h4>CompanyJobPoco</h4>*@
@@ -41,3 +42,8 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+@*<div>
+    <partial name="~/Views/Shared/CompanyShared/_JobDescription.cshtml" model="Model.CompanyJobDescription"/>
+    <partial name="~/Views/Shared/CompanyShared/_JobSkill.cshtml" model="Model.CompanyJobDescription"/>
+    <partial name="~/Views/Shared/CompanyShared/_JobEducation.cshtml" model="Model.CompanyJobDescription"/>
+</div>*@
