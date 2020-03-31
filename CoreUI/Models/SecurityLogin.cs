@@ -23,11 +23,11 @@ namespace CoreUI.Models
         public Boolean IsLocked { get; set; }
 
         public Boolean IsInactive { get; set; }
-        [Display(Name = "Email_Address")]
+        [Display(Name = "Email")]
         public string EmailAddress { get; set; }
 #nullable enable
         public string? PhoneNumber { get; set; }
-        [Display(Name ="Full_Name")]
+        [Display(Name ="Full Name")]
         [MaxLength(70)]
         public string FullName { get; set; }
 

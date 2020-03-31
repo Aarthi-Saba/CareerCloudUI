@@ -36,10 +36,7 @@
         <tr>
             @{
                 var company = item.CompanyJob.CompanyProfile.CompanyDescription.FirstOrDefault();
-                if (company != null)
-                {
-                    var companyName = company.CompanyName;
-                }
+
             }
             <td>
                 @company.CompanyName

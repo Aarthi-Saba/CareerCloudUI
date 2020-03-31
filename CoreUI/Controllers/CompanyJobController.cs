@@ -27,6 +27,7 @@ namespace CoreUI.Controllers
         }
 
         // GET: CompanyJob/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -36,10 +37,13 @@ namespace CoreUI.Controllers
 
             var companyJobPoco = await _context.CompanyJobs
                 .Include(c => c.CompanyProfile)
-                .Include(i => i.CompanyJobDescription)
-                .Include(i => i.CompanyJobEducation)
-                .Include(i => i.CompanyJobSkill)
+                .Include(c => c.CompanyJobDescription)
+                .Include(c => c.CompanyJobEducation)
+                .Include(c => c.CompanyJobSkill)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            TempData["JobSkill"] = _context.CompanyJobSkills.Where(j => j.Job == companyJobPoco.Id).FirstOrDefault();
+            TempData["JobEducation"] = _context.CompanyJobEducations.Where(j => j.Job == companyJobPoco.Id).FirstOrDefault();
+            TempData["JobDescription"] = _context.CompanyJobDescriptions.Where(j => j.Job == companyJobPoco.Id).FirstOrDefault();
             if (companyJobPoco == null)
             {
                 return NotFound();
@@ -51,7 +55,8 @@ namespace CoreUI.Controllers
         // GET: CompanyJob/Create
         public IActionResult Create()
         {
-            ViewData["Company"] = new SelectList(_context.CompanyProfiles, "Id", "CompanyWebsite");
+
+            ViewData["Company"] = new SelectList(_context.CompanyDescriptions, "CompanyName", "CompanyName");
             return View();
         }
 

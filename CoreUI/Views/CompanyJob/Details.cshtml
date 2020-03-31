@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Company Job Details";
     ViewData["Options"] = true;
+    var skillPoco = (CompanyJobSkillPoco)TempData["JobSkill"];
+    var eduPoco = (CompanyJobEducationPoco)TempData["JobEducation"];
+    var descPoco = (CompanyJobDescriptionPoco)TempData["JobDescription"];
 }
 
 <h3>Company Job Details</h3>
@@ -12,28 +15,28 @@
     @*<h4>CompanyJobPoco</h4>*@
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProfileCreated)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProfileCreated)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsInactive)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsInactive)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsCompanyHidden)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsCompanyHidden)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompanyProfile)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CompanyProfile.CompanyWebsite)
         </dd>
     </dl>
@@ -42,8 +45,97 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-@*<div>
-    <partial name="~/Views/Shared/CompanyShared/_JobDescription.cshtml" model="Model.CompanyJobDescription"/>
-    <partial name="~/Views/Shared/CompanyShared/_JobSkill.cshtml" model="Model.CompanyJobDescription"/>
-    <partial name="~/Views/Shared/CompanyShared/_JobEducation.cshtml" model="Model.CompanyJobDescription"/>
-</div>*@
+
+
+<div>
+    @if (Model.CompanyJobSkill.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.Label("Skill")
+                    </th>
+                    <th>
+                        @Html.Label("SkillLevel")
+                    </th>
+                    <th>
+                        @Html.Label("Importance")
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @skillPoco.Skill
+                    </td>
+                    <td>
+                        @skillPoco.SkillLevel
+                    </td>
+                    <td>
+                        @skillPoco.Importance
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+</div>
+
+<div>
+    @if (Model.CompanyJobEducation != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.Label("Major")
+                    </th>
+                    <th>
+                        @Html.Label("Importance")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @eduPoco.Major
+                    </td>
+                    <td>
+                        @eduPoco.Importance
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+</div>
+<div>
+    @if (Model.CompanyJobDescription != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.Label("Job Name")
+                    </th>
+                    <th>
+                        @Html.Label("Job Description")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @descPoco.JobName
+                    </td>
+                    <td>
+                        @descPoco.JobDescriptions
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+</div>

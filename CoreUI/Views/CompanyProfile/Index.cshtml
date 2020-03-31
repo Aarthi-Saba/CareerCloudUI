@@ -5,14 +5,14 @@
 }
 
 <h3>Company Profile</h3>
-@*<p>
+<p>
     <a asp-controller="CompanyDescription" asp-action="Index"> CompanyDescription </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="CompanyJobDescription" asp-action="Index"> CompanyJobDescription </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="CompamyJob" asp-action="Index"> CompanyJob </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="CompanyJobEducation" asp-action="Index"> CompanyJobEducation </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="CompanyJobSkill" asp-action="Index"> CompanyJobSkill </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="CompanyLocation" asp-action="Index"> CompanyLocation </a>
-</p>*@
+</p>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -20,7 +20,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RegistrationDate)
+                @Html.Label("Company Name");
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">
+                    @Html.DisplayNameFor(model => model.RegistrationDate)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CompanyWebsite)
@@ -31,15 +36,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContactName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyLogo)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            @{ 
+                var company = item.CompanyDescription.FirstOrDefault();
+            }
+            <td>
+                @company.CompanyName
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegistrationDate)
             </td>
@@ -53,12 +62,10 @@
                 @Html.DisplayFor(modelItem => item.ContactName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompanyLogo)
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-action="Jobs" asp-route-id="@item.Id" >Jobs</a>
             </td>
         </tr>
 }

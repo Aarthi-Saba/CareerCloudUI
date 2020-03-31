@@ -1,0 +1,15 @@
+﻿@model CareerCloud.Pocos.ApplicantProfilePoco
+
+@{
+    ViewData["Title"] = "Jobs";
+    ViewData["Options"] = true;
+}
+
+<h3>Jobs</h3>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    <partial name="~/Views/Shared/ApplicantShared/_JobApplication.cshtml" model="Model.ApplicantJob.ToList()" />
+</div>

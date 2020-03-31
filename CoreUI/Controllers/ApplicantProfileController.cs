@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,10 +23,44 @@ namespace CoreUI.Controllers
         }
 
         // GET: ApplicantProfile
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,string currentFilter,string searchName,int? pageNumber)
         {
-            var careerCloudContext = _context.ApplicantProfiles.Include(a => a.SecurityLogin).Include(a => a.SystemCountry);
-            return View(await careerCloudContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["SalarySortParm"] = String.IsNullOrEmpty(sortOrder) ? "sal_desc_order" : "";
+            ViewData["RateSortParm"] = sortOrder == "Rate" ? "rate_desc_order" : "Rate";
+            ViewData["Filter"] = searchName;
+            if (searchName != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchName = currentFilter;
+            }
+
+            var applicants = _context.ApplicantProfiles
+                                        .Include(a => a.SecurityLogin).Include(a => a.SystemCountry).AsQueryable();
+            if(!String.IsNullOrWhiteSpace(searchName))
+            {
+                applicants = applicants.Where(a => a.SecurityLogin.FullName.Contains(searchName));
+            }
+            switch (sortOrder)
+            {
+                case "sal_desc_order":
+                    applicants = applicants.OrderByDescending(s => s.CurrentSalary);
+                    break;
+                case "Rate":
+                    applicants = applicants.OrderBy(s => s.CurrentRate);
+                    break;
+                case "rate_desc_order":
+                    applicants = applicants.OrderByDescending(s => s.CurrentRate);
+                    break;
+                default:
+                    applicants = applicants.OrderBy(s => s.CurrentSalary);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<ApplicantProfilePoco>.CreateAsync(applicants.AsNoTracking(), pageNumber??1,pageSize));
         }
 
         // GET: ApplicantProfile/Details/5
@@ -206,6 +241,23 @@ namespace CoreUI.Controllers
         private bool ApplicantProfilePocoExists(Guid id)
         {
             return _context.ApplicantProfiles.Any(e => e.Id == id);
+        }
+        public ActionResult Jobs(Guid? id)
+        {
+            var applicantProfilePoco = _context.ApplicantProfiles
+                .Include(a => a.ApplicantEducation)
+                .Include(a => a.ApplicantJob)
+                .Include(a => a.ApplicantResume)
+                .Include(a => a.ApplicantWork)
+                .Include(a => a.ApplicantSkill)
+                .Include(a => a.SecurityLogin)
+                .Include(a => a.SystemCountry)
+                .FirstOrDefault(m => m.Id == id);
+            if (applicantProfilePoco == null)
+            {
+                return NotFound();
+            }
+            return View(applicantProfilePoco);
         }
     }
 }

@@ -20,34 +20,58 @@
                         @Html.DisplayNameFor(model => model.ApplicantProfile)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.CompanyJob)
+                        @Html.Label("Company Name")
                     </th>
-                    <th></th>
+                    <th>
+                        @Html.Label("Job Name")
+                    </th>
+                    <th>
+                        @Html.Label("Job Description")
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                        <tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicantProfile.Id)
+                        </td>
+                        @if (item.CompanyJob != null)
+                        {
+                            var company = item.CompanyJob.CompanyProfile.CompanyDescription.FirstOrDefault();
                             <td>
-                                @Html.DisplayFor(modelItem => item.ApplicationDate)
+                                @if(company != null)
+                                {
+                                    @company.CompanyName
+                                }
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ApplicantProfile.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CompanyJob.Id)
-                            </td>
-                            @if (flag)
+                        }
+                        <td>
+                            @if (item.CompanyJob != null)
                             {
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
+                                Html.DisplayFor(modelItem => item.CompanyJob.CompanyJobDescription.JobName);
                             }
+                        </td>
+                        <td>
+                            @if (item.CompanyJob != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.CompanyJob.CompanyJobDescription.JobDescriptions)
+                            }
+                        </td>
+                        @if (flag)
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-controller="ApplicantJobApplication" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-controller="ApplicantJobApplication" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-controller="ApplicantJobApplication" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        }
 
-                        </tr>
+                    </tr>
                 }
             </tbody>
         </table>

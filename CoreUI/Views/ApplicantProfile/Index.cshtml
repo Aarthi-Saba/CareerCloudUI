@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CareerCloud.Pocos.ApplicantProfilePoco>
+﻿@model PaginatedList<CareerCloud.Pocos.ApplicantProfilePoco>
 
 @{
     ViewData["Title"] = "Applicant Profile";
@@ -6,32 +6,44 @@
 
 <h3>Applicant Profile </h3>
 
-@*<p>
+<p>
     <a asp-controller="ApplicantEducation" asp-action="Index"> ApplicantEducation </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="ApplicantJobApplication" asp-action="Index"> ApplicantJobApplication </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="ApplicantResume" asp-action="Index"> ApplicantResume </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="ApplicantSkill" asp-action="Index"> ApplicantSkill </a> &nbsp; &nbsp; | &nbsp; &nbsp;
     <a asp-controller="ApplicantWorkHistory" asp-action="Index"> ApplicantWorkHistory </a>
-</p>*@
+</p>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
+<form asp-action="Index" method="get">
+    <p>
+        Search by Name: <input type="text" name="SearchName" value="@ViewData["Filter"]" />
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentSalary)
+                @Html.Label("Applicant Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrentRate)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SalarySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">CurrentSalary</a>
+                @*@Html.DisplayNameFor(model => model.CurrentSalary)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Currency)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["RateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">CurrentRate</a>
+                @*@Html.DisplayNameFor(model => model.CurrentRate)*@
             </th>
-
             <th>
-                @Html.DisplayNameFor(model => model.Street)
+                @Html.Label("Currency");
+                @*@Html.DisplayNameFor(model => model.Currency)*@
+            </th>
+            <th>
+                @Html.Label("Street");
+                @*@Html.DisplayNameFor(model => model.Street)*@
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.City)
@@ -40,21 +52,26 @@
                     @Html.DisplayNameFor(model => model.PostalCode)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Province)
+                @Html.Label("Province")
+                @*@Html.DisplayNameFor(model => model.Province)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SecurityLogin)
+                @Html.Label("SecurityLogin")
+                @*@Html.DisplayNameFor(model => model.SecurityLogin)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SystemCountry)
+                @Html.Label("CountryCode")
+                @*@Html.DisplayNameFor(model => model.SystemCountry.Code)*@
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecurityLogin.FullName)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CurrentSalary)
                 </td>
@@ -73,17 +90,37 @@
                     @Html.DisplayFor(modelItem => item.PostalCode)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SecurityLogin.EmailAddress)
+                    @Html.DisplayFor(modelItem => item.SecurityLogin.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SystemCountry.Code)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <br />
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> <br />
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                    <a asp-action="Jobs" asp-route-id="@item.Id">JobsApplied</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

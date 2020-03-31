@@ -14,11 +14,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Resume)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.LastUpdated)
-            </th>
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.ApplicantProfile)
+                @Html.Label("Applicant Name")
+                @*@Html.DisplayNameFor(model => model.ApplicantProfile)*@
             </th>
             <th></th>
         </tr>
@@ -30,11 +31,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Resume)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.LastUpdated)
-                </td>
+                </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicantProfile.City)
+                    @Html.DisplayFor(modelItem => item.ApplicantProfile.SecurityLogin.FullName)
                 </td>
                 @if (flag)
                 {

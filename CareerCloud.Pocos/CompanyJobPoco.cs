@@ -13,6 +13,7 @@ namespace CareerCloud.Pocos
         public Guid Id { get; set; }
         public Guid Company { get; set; }
         [Column("Profile_Created")]
+        [DataType(DataType.Date)]
         public DateTime ProfileCreated { get; set; }
         [Column("Is_Inactive")]
         public Boolean IsInactive { get; set; }

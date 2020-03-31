@@ -22,9 +22,20 @@ namespace CoreUI.Controllers
         }
 
         // GET: CompanyProfile
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.CompanyProfiles.ToListAsync());
+            ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc_order" : "";
+            var company = _context.CompanyProfiles.Include(c => c.CompanyDescription).AsQueryable();
+            switch (sortOrder)
+            {
+                case "date_desc_order":
+                    company = company.OrderByDescending(s => s.RegistrationDate);
+                    break;
+                default:
+                    company = company.OrderBy(s => s.RegistrationDate);
+                    break;
+            }
+            return View(await company.AsNoTracking().ToListAsync());
         }
 
         // GET: CompanyProfile/Details/5
@@ -167,6 +178,14 @@ namespace CoreUI.Controllers
         private bool CompanyProfilePocoExists(Guid id)
         {
             return _context.CompanyProfiles.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> Jobs(Guid id)
+        {
+            var companyProfilePoco = await _context.CompanyProfiles
+                .Include(c => c.CompanyJob)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            return View(companyProfilePoco);
+            
         }
     }
 }

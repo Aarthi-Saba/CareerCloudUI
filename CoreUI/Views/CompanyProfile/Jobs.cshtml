@@ -1,0 +1,14 @@
+﻿@model CareerCloud.Pocos.CompanyProfilePoco
+@{
+    ViewData["Title"] = "Jobs";
+    ViewData["Options"] = true;
+}
+
+<h1>Jobs</h1>
+<div>
+    @if (Model.CompanyJob.Count > 0)
+    {
+        <partial name="~/Views/Shared/CompanyShared/_Job.cshtml" model="Model.CompanyJob.ToList()" />
+        <br />
+    }
+</div>

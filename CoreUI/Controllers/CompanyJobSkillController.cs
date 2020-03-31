@@ -39,6 +39,7 @@ namespace CoreUI.Controllers
             var companyJobSkillPoco = await _context.CompanyJobSkills
                 .Include(c => c.CompanyJob)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (companyJobSkillPoco == null)
             {
                 return NotFound();
@@ -72,7 +73,7 @@ namespace CoreUI.Controllers
                 companyJobSkillPoco.Job = Guid.Parse(TempData["JobId"].ToString());
                 _context.Add(companyJobSkillPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details","CompanyJob");
+                return RedirectToAction("Details","CompanyJob",new { id = companyJobSkillPoco.Job });
             }
             //ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobSkillPoco.Job);
             return View(companyJobSkill);
